@@ -1,0 +1,2 @@
+rsync --mirror src/ /pyboard
+repl ~ import machine ~ machine.reset() ~

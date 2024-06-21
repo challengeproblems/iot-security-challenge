@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "iotsecurity"
+version = "0.1.0"
+description = ""
+authors = ["Ente <ducksource@duckpond.ch>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+freezefs = "^2.4"
+scapy = "^2.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
