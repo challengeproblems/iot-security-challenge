@@ -48,6 +48,23 @@ For example, to flash firmware on all connected devices:
 alltty flash
 ```
 
+## Top-Level Folders and Files
+
+### `10000_common_passwords`
+- Contains a list of common passwords, likely used for security testing or password strength validation.
+
+### `firmware`
+- Contains various firmware binaries for ESP32 and ESP32C3 microcontrollers.
+
+### `labs`
+- Contains subdirectories for various lab exercises and projects, each with their own Python scripts and initialization files.
+
+### `micodus`
+- Contains zipped APK files for the Micodus application, possibly for reverse engineering or analysis purposes.
+
+### `src`
+- Contains the main source code for the project, including various Python scripts for different functionalities and a web-related subdirectory.
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
