@@ -35,6 +35,7 @@ in
     gzip
     unzip
     gocryptfs
+    tcpdump
 
     cachix
   ]);
@@ -51,10 +52,19 @@ in
     exec = ''
       set -exuo pipefail
 
-      tty="''${1:-/dev/ttyUSB0}"
+      tty="''${1:-$(util_get_first_usbtty)}"
       esptool.py \
         --port "''${tty}" \
         erase_flash
+    '';
+  };
+
+  scripts.util_get_first_usbtty = {
+    description = "Get the first available /dev/ttyUSB*";
+    exec = ''
+      pattern="/dev/ttyUSB*"
+      ttys=( $pattern )
+      printf '%q' "''${ttys[0]}"
     '';
   };
 
@@ -63,7 +73,7 @@ in
     exec = ''
       set -euo pipefail
 
-      tty="''${1:-/dev/ttyUSB0}"
+      tty="''${1:-$(util_get_first_usbtty)}"
       esptool.py \
         --port "''${tty}" \
         read_mac \
@@ -77,7 +87,7 @@ in
     exec = ''
       set -exuo pipefail
 
-      tty="''${1:-/dev/ttyUSB0}"
+      tty="''${1:-$(util_get_first_usbtty)}"
       (
         cd "''${DEVENV_ROOT}"
         set -x
@@ -119,7 +129,7 @@ in
     exec = ''
       set -exuo pipefail
 
-      tty="''${1:-/dev/ttyUSB0}"
+      tty="''${1:-$(util_get_first_usbtty)}"
       picocom \
         -b115200 \
         "''${tty}"
@@ -131,7 +141,7 @@ in
     exec = ''
       set -exuo pipefail
 
-      tty="''${1:-/dev/ttyUSB0}"
+      tty="''${1:-$(util_get_first_usbtty)}"
       sleep infinity | repl "''${tty}"
     '';
   };
@@ -141,7 +151,7 @@ in
     exec = ''
       set -exuo pipefail
 
-      tty="''${1:-/dev/ttyUSB0}"
+      tty="''${1:-$(util_get_first_usbtty)}"
       tty_name="''$(basename "''${tty}")"
       mpfshell \
         "''${tty_name}"
@@ -167,7 +177,7 @@ in
     exec = ''
       set -exuo pipefail
 
-      tty="''${1:-/dev/ttyUSB0}"
+      tty="''${1:-$(util_get_first_usbtty)}"
       (
         cd "''${DEVENV_ROOT}"
         rshell \
@@ -183,7 +193,7 @@ in
       set -euo pipefail
 
       lab="''${1?Missing lab as first parameter}"
-      tty="''${2:-/dev/ttyUSB0}"
+      tty="''${2:-$(util_get_first_usbtty)}"
       (
         cd "''${DEVENV_ROOT}"
         if [[ ! -e "labs/''${lab}" ]]; then
@@ -238,7 +248,7 @@ in
     exec = ''
       set -exuo pipefail
 
-      tty="''${1:-/dev/ttyUSB0}"
+      tty="''${1:-$(util_get_first_usbtty)}"
 
       flash_erase "''${tty}"
       flash "''${tty}"
