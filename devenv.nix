@@ -48,7 +48,7 @@ in
   };
 
   scripts.erase_flash = {
-    description = "Set esp32 flash to all 0x0";
+    description = "Set ESP32 flash to all 0x0";
     exec = ''
       set -exuo pipefail
 
@@ -60,7 +60,7 @@ in
   };
 
   scripts.getchip = {
-    description = "Get the chip info for the connected esp32";
+    description = "Get the chip info for the connected ESP32";
     exec = ''
       set -euo pipefail
 
@@ -74,7 +74,7 @@ in
   };
 
   scripts.flash = {
-    description = "Flash your esp32 with clean Micropython firmware";
+    description = "Flash your ESP32 with clean Micropython firmware";
     exec = ''
       set -exuo pipefail
 
@@ -116,7 +116,7 @@ in
   };
 
   scripts.repl = {
-    description = "Start an interactive read eval print loop from the connected esp32";
+    description = "Start an interactive read eval print loop from the connected ESP32";
     exec = ''
       set -exuo pipefail
 
@@ -128,7 +128,7 @@ in
   };
 
   scripts.repl_peek = {
-    description = "Show serial logs from the connected esp32";
+    description = "Show serial logs from the connected ESP32";
     exec = ''
       set -exuo pipefail
 
@@ -138,7 +138,7 @@ in
   };
 
   scripts.fs = {
-    description = "Browse the file system from the connected esp32";
+    description = "Browse the file system from the connected ESP32";
     exec = ''
       set -exuo pipefail
 
@@ -150,7 +150,7 @@ in
   };
 
   scripts.alltty = {
-    description = "Run a command on all connected esp32's";
+    description = "Run a command on all connected ESP32's";
     exec = ''
       set -exuo pipefail
 
@@ -164,7 +164,7 @@ in
   };
 
   scripts.upload = {
-    description = "Upload the content of your src/ directory to the connected esp32";
+    description = "Upload the content of your src/ directory to the connected ESP32";
     exec = ''
       set -exuo pipefail
 
@@ -179,7 +179,7 @@ in
   };
 
   scripts.upload_lab = {
-    description = "Upload a lab in labs/ to the connected esp32";
+    description = "Upload a lab in labs/ to the connected ESP32";
     exec = ''
       set -euo pipefail
 
@@ -235,7 +235,7 @@ in
   };
 
   scripts.clean_setup = {
-    description = "Do all steps required to get the firmware on the esp32";
+    description = "Do all steps required to get the firmware on the ESP32";
     exec = ''
       set -exuo pipefail
 

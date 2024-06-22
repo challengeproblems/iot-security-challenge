@@ -16,13 +16,14 @@ This will install all necessary dependencies and tools required for the labs.
 
 Here are some commands you can use within the development environment:
 
-* `flash`: Flash your ESP32 with clean firmware.
-* `erase_flash`: Set ESP32 flash to all `0x0`.
-* `upload`: Upload your MicroPython code from the `src/` directory.
-* `upload_lab LABNAME`: Upload a lab called `LABNAME`.
-* `fs`: Browse the filesystem on your ESP32.
-* `repl_peek`: Show logs.
-* `repl`: Start an interactive Read-Eval-Print Loop (REPL).
+* `flash`: Flash your ESP32 with clean firmware
+* `erase_flash`: Set ESP32 flash to all `0x0`
+* `upload`: Upload your MicroPython code from the `src/` directory
+* `upload_lab LABNAME`: Upload a lab called `LABNAME`
+* `fs`: Browse the filesystem on your ESP32
+* `repl_peek`: Show logs
+* `repl`: Start an interactive Read-Eval-Print Loop (REPL)
+* `devenv_help`: Print all available commands
 
 ## Working with Multiple ESP32 Devices
 
