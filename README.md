@@ -1,6 +1,6 @@
 # IoT Security
 
-Welcome to the **IoT Security** project! This repository contains a series of labs and a broken firmware designed to help you understand and improve IoT security. 
+Welcome to the **IoT Security** project! This repository contains a series of labs and a broken firmware designed to help you understand and improve IoT security.
 
 ## Installation
 
@@ -17,13 +17,15 @@ This will install all necessary dependencies and tools required for the labs.
 Here are some commands you can use within the development environment:
 
 * `flash`: Flash your ESP32 with clean firmware
-* `erase_flash`: Set ESP32 flash to all `0x0`
+* `flash_erase`: Set ESP32 flash to all `0x0`
 * `upload`: Upload your MicroPython code from the `src/` directory
 * `upload_lab LABNAME`: Upload a lab called `LABNAME`
 * `fs`: Browse the filesystem on your ESP32
 * `repl_peek`: Show logs
 * `repl`: Start an interactive Read-Eval-Print Loop (REPL)
 * `devenv_help`: Print all available commands
+
+**Hint**: See [ESP32.md](ESP32.md) for an overview of the ESP32's functionality.
 
 ## Working with Multiple ESP32 Devices
 
@@ -51,20 +53,20 @@ alltty flash
 
 ## Top-Level Folders and Files
 
-### `10000_common_passwords`
-- Contains a list of common passwords, likely used for security testing or password strength validation.
+### `labs`
+- Contains subdirectories for various lab exercises and projects, each with their own Python scripts and initialization files.
+
+### `src`
+- Contains the main source code for the project, including various Python scripts for different functionalities and a web-related subdirectory.
 
 ### `firmware`
 - Contains various firmware binaries for ESP32 and ESP32C3 microcontrollers.
 
-### `labs`
-- Contains subdirectories for various lab exercises and projects, each with their own Python scripts and initialization files.
-
 ### `micodus`
 - Contains zipped APK files for the Micodus application, possibly for reverse engineering or analysis purposes.
 
-### `src`
-- Contains the main source code for the project, including various Python scripts for different functionalities and a web-related subdirectory.
+### `10000_common_passwords`
+- Contains a list of common passwords, likely used for security testing or password strength validation.
 
 ## License
 
