@@ -29,6 +29,7 @@ in
 
     iw
     wirelesstools
+    gocryptfs
 
     thc-hydra
     nmap
@@ -289,6 +290,39 @@ in
     printf "\x1f\x8b\x08\x00\x00\x00\x00\x00" \
     | cat - "''${1}" \
     | gzip -dc
+  '';
+
+  scripts.reset_update_devenv.exec = ''
+    echo "============= WARNING =============="
+    echo "This will reset and update your devenv"
+    echo "You will loose all your changes"
+    echo "Hit ENTER to continue"
+    echo "[ENTER]"
+    read
+
+    set -exuo pipefail
+    (
+      cd "''${DEVENV_ROOT}"
+      git reset --hard origin/master
+      git clean -f -f -d -x
+      git pull
+    )
+  '';
+
+  scripts.mount_firmware.exec = ''
+    set -exuo pipefail
+    (
+      cd "''${DEVENV_ROOT}"
+      gocryptfs -nonempty src_encrypted/ src/
+    )
+  '';
+
+  scripts.unmount_firmware.exec = ''
+    set -exuo pipefail
+    (
+      cd "''${DEVENV_ROOT}"
+      umount src/
+    )
   '';
 
 
