@@ -54,7 +54,7 @@ in
       tty="''${1:-/dev/ttyUSB0}"
       esptool.py \
         --port "''${tty}" \
-        flash_erase
+        erase_flash
     '';
   };
 
