@@ -48,7 +48,7 @@ in
   };
 
   scripts.flash_erase = {
-    description = "Set ESP32 flash to all 0x0";
+    description = "Set ESP32 flash to all 0x0 bytes";
     exec = ''
       set -exuo pipefail
 
