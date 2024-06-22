@@ -7,8 +7,9 @@
 *.swo
 
 # firmware
-src/ota_firmware.py
-src/ota_firmware.json
+src/
+!src/main.py
+!src/hello_world.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

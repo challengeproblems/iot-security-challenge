@@ -243,13 +243,14 @@ in
     '';
   };
 
-  scripts.flash_upload = {
+  scripts.doall = {
     description = "Do all steps required to get the firmware on the ESP32";
     exec = ''
       set -exuo pipefail
 
       tty="''${1:-$(util_get_first_usbtty)}"
 
+      firmware_mount
       flash_erase "''${tty}"
       flash "''${tty}"
       firmware_mk "''${tty}"
@@ -373,7 +374,9 @@ in
       set -exuo pipefail
       (
         cd "''${DEVENV_ROOT}"
-        gocryptfs -nonempty src_encrypted/ src/
+        if ! findmnt -M src/ &>/dev/null; then
+          gocryptfs -nonempty src_encrypted/ src/
+        fi
       )
     '';
   };
