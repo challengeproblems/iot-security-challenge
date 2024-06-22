@@ -395,7 +395,7 @@ in
       echo
       echo Helper scripts you can run to make your development richer:
       echo
-      sed -e 's| |••|g' -e 's|=| |' <<EOF | column -t | sed -e 's|^|- |' -e 's|••| |g'
+      sed -e 's| |••|g' -e 's|=| |' <<EOF | column -t << EOF | sed -e 's|^|- |' -e 's|••| |g'
       ${lib.generators.toKeyValue {} (lib.mapAttrs (name: value: value.description) config.scripts)}
       EOF
       echo
