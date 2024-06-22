@@ -1,4 +1,4 @@
-from random import random, randrange, seed
+from random import randrange, seed
 from time import sleep, ticks_cpu
 
 SLEEP_TIME__S = 3
