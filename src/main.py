@@ -6,4 +6,5 @@ import esp
 esp.osdebug(None)
 gc.collect()
 
-print("Hello world")
+# Hello World
+import hello_world
