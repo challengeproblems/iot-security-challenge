@@ -338,7 +338,7 @@ in
     '';
   };
 
-  scripts.reset_update_devenv = {
+  scripts.devenv_reset_update = {
     description = "Reset and update the devenv";
     exec = ''
       echo "============= WARNING =============="
