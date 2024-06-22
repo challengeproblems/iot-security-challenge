@@ -321,9 +321,10 @@ in
     exec = ''
       set -exuo pipefail
 
+      interface="''${1?Missing interface argument}"
       (
         cd "''${DEVENV_ROOT}"
-        sudo iftop "''${@}"
+        sudo iftop -i "''${interface}"
       )
     '';
   };
