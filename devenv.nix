@@ -369,7 +369,7 @@ in
     '';
   };
 
-  scripts.unmount_firmware = {
+  scripts.umount_firmware = {
     description = "Unmount the secret firmware directory";
     exec = ''
       set -exuo pipefail
