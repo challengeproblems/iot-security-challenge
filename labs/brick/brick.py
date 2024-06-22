@@ -1,5 +1,5 @@
-from machine import soft_reset
+from machine import reset
 
 
 def main():
-    soft_reset()
+    reset()
