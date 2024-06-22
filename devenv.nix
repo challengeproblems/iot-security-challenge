@@ -15,6 +15,7 @@ in
     git
     gnused
     coreutils
+    util-linuxMinimal
     rsync
 
     micropython
@@ -23,19 +24,17 @@ in
     rshell
     mpfshell
     parallel
+    file
 
     nixpkgs-fmt
     black
-
-    iw
-    wirelesstools
-    gocryptfs
 
     thc-hydra
     nmap
     iftop
     gzip
     unzip
+    gocryptfs
 
     cachix
   ]);
@@ -47,7 +46,7 @@ in
     '';
   };
 
-  scripts.erase_flash = {
+  scripts.flash_erase = {
     description = "Set ESP32 flash to all 0x0";
     exec = ''
       set -exuo pipefail
@@ -55,11 +54,11 @@ in
       tty="''${1:-/dev/ttyUSB0}"
       esptool.py \
         --port "''${tty}" \
-        erase_flash
+        flash_erase
     '';
   };
 
-  scripts.getchip = {
+  scripts.util_getchip = {
     description = "Get the chip info for the connected ESP32";
     exec = ''
       set -euo pipefail
@@ -83,7 +82,7 @@ in
         cd "''${DEVENV_ROOT}"
         set -x
 
-        chip_id="''$(getchip "''${tty}")"
+        chip_id="''$(util_getchip "''${tty}")"
 
         declare -A chip_name=( \
           ["esp32-c3"]="esp32-c3" \
@@ -199,7 +198,7 @@ in
     '';
   };
 
-  scripts.mkfirmware = {
+  scripts.firmware_mk = {
     description = "Build the ota firmware from the content of src/";
     exec = ''
       set -exuo pipefail
@@ -223,7 +222,7 @@ in
           *.py *.json www \
           "''${fw_tmp}"
 
-        freezefs \
+        util_freezefs \
           --target=/ \
           --on-import=extract \
           --overwrite=always \
@@ -234,21 +233,21 @@ in
     '';
   };
 
-  scripts.clean_setup = {
+  scripts.flash_upload = {
     description = "Do all steps required to get the firmware on the ESP32";
     exec = ''
       set -exuo pipefail
 
       tty="''${1:-/dev/ttyUSB0}"
 
-      erase_flash "''${tty}"
+      flash_erase "''${tty}"
       flash "''${tty}"
-      mkfirmware "''${tty}"
+      firmware_mk "''${tty}"
       upload "''${tty}"
     '';
   };
 
-  scripts.portmap = {
+  scripts.lab_portmap = {
     description = "Scan ports on the firmware";
     exec = ''
       set -exuo pipefail
@@ -260,7 +259,7 @@ in
     '';
   };
 
-  scripts.bforce = {
+  scripts.lab_bforce = {
     description = "Bruteforce passwords for the firmware's webui";
     exec = ''
       set -exuo pipefail
@@ -290,21 +289,21 @@ in
     '';
   };
 
-  scripts.uninstall_nix = {
+  scripts.devenv_uninstall = {
     description = "Print instructions on how to uninstall nix";
     exec = ''
       echo "[*] See: https://nix.dev/manual/nix/2.22/installation/uninstall#multi-user"
     '';
   };
 
-  scripts.freezefs = {
+  scripts.util_freezefs = {
     description = "https://github.com/bixb922/freezefs";
     exec = ''
       python -m freezefs "''${@}"
     '';
   };
 
-  scripts.dns_amp = {
+  scripts.lab_dns_amp = {
     description = "Run the dns amplification attack";
     exec = ''
       set -exuo pipefail
@@ -316,7 +315,7 @@ in
     '';
   };
 
-  scripts.monitor_network = {
+  scripts.lab_monitor_network = {
     description = "Show network statistics";
     exec = ''
       set -exuo pipefail
@@ -329,7 +328,7 @@ in
     '';
   };
 
-  scripts.zlib_uncompress = {
+  scripts.util_zlib_uncompress = {
     description = "Uncompress zlib data from stdin";
     exec = ''
       printf "\x1f\x8b\x08\x00\x00\x00\x00\x00" \
@@ -358,7 +357,7 @@ in
     '';
   };
 
-  scripts.mount_firmware = {
+  scripts.firmware_mount = {
     description = "Mount the secret firmware directory";
     exec = ''
       set -exuo pipefail
@@ -369,13 +368,13 @@ in
     '';
   };
 
-  scripts.umount_firmware = {
+  scripts.firmware_umount = {
     description = "Unmount the secret firmware directory";
     exec = ''
       set -exuo pipefail
       (
         cd "''${DEVENV_ROOT}"
-        umount src/
+        sudo umount src/
       )
     '';
   };
@@ -386,13 +385,12 @@ in
       echo
       echo Helper scripts you can run to make your development richer:
       echo
-      ${pkgs.gnused}/bin/sed -e 's| |••|g' -e 's|=| |' <<EOF | ${pkgs.util-linuxMinimal}/bin/column -t | ${pkgs.gnused}/bin/sed -e 's|^|- |' -e 's|••| |g'
+      sed -e 's| |••|g' -e 's|=| |' <<EOF | column -t | sed -e 's|^|- |' -e 's|••| |g'
       ${lib.generators.toKeyValue {} (lib.mapAttrs (name: value: value.description) config.scripts)}
       EOF
       echo
     '';
   };
-
 
   enterShell = ''
     devenv_help
