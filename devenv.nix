@@ -243,14 +243,16 @@ in
     '';
   };
 
-  scripts.doall = {
-    description = "Do all steps required to get the firmware on the ESP32";
+  scripts.flash_final_lab = {
+    description = "Do all steps required to get the final lab on the ESP32";
     exec = ''
       set -exuo pipefail
 
       tty="''${1:-$(util_get_first_usbtty)}"
 
       firmware_mount
+      trap firmware_umount EXIT
+
       flash_erase "''${tty}"
       flash "''${tty}"
       firmware_mk "''${tty}"
@@ -387,7 +389,9 @@ in
       set -exuo pipefail
       (
         cd "''${DEVENV_ROOT}"
-        sudo umount src/
+        if findmnt -M src/ &>/dev/null; then
+          fusermount -u src/
+        fi
       )
     '';
   };
