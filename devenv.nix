@@ -323,7 +323,7 @@ in
 
       (
         cd "''${DEVENV_ROOT}"
-        sudo python dns_amp_solved.py "''${@}"
+        sudo python dns_amp.py "''${@}"
       )
     '';
   };
