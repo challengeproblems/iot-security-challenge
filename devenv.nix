@@ -352,7 +352,7 @@ in
     exec = ''
       echo "============= WARNING =============="
       echo "This will reset and update your devenv"
-      echo "You will loose all your changes"
+      echo "You will loose all your changes in ''${DEVENV_ROOT}"
       echo "Hit ENTER to continue"
       echo "[ENTER]"
       read
