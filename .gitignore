@@ -7,9 +7,10 @@
 *.swo
 
 # firmware
-src/
+src/*
 !src/main.py
 !src/hello_world.py
+!src/urequests.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
