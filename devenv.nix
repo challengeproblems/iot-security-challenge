@@ -18,6 +18,7 @@ in
     util-linuxMinimal
     which
     rsync
+    mktemp
 
     micropython
     esptool
@@ -394,9 +395,11 @@ in
     description = "Checks if the secret firmware directory is mounted";
     exec = ''
       set -exuo pipefail
+
+      dir="''${1:-src/}"
       (
         cd "''${DEVENV_ROOT}"
-        findmnt -M src/ &>/dev/null
+        findmnt -M "''${dir}" &>/dev/null
       )
     '';
   };
@@ -405,10 +408,12 @@ in
     description = "Mount the secret firmware directory";
     exec = ''
       set -exuo pipefail
+
+      dir="''${1:-src/}"
       (
         cd "''${DEVENV_ROOT}"
-        if ! firmware_mount_check; then
-          gocryptfs -nonempty src_encrypted/ src/
+        if ! firmware_mount_check "''${dir}"; then
+          gocryptfs -nonempty src_encrypted/ "''${dir}"
         fi
       )
     '';
@@ -418,11 +423,47 @@ in
     description = "Unmount the secret firmware directory";
     exec = ''
       set -exuo pipefail
+
+      dir="''${1:-src/}"
       (
         cd "''${DEVENV_ROOT}"
         if firmware_mount_check; then
-          fusermount -u src/
+          fusermount -u "''${dir}"
         fi
+      )
+    '';
+  };
+
+  scripts.firmware_extract_to_src = {
+    description = "Extract a fresh copy of the original firmware to src/";
+    exec = ''
+      set -exuo pipefail
+
+      echo "============= WARNING =============="
+      echo "This will reset overwrite all your changes in src/"
+      echo "Hit ENTER to continue"
+      echo "[ENTER]"
+      read
+
+      fw_tmp="$(mktemp -d)"
+
+      atexit(){
+        firmware_umount "''${fw_tmp}"
+      }
+
+      if ! firmware_mount_check "''${fw_tmp}"; then
+        firmware_mount "''${fw_tmp}"
+        trap atexit2 EXIT
+      fi
+
+      (
+        cd "''${DEVENV_ROOT}"
+
+        rsync \
+          --archive \
+          --verbose \
+          "''${fw_tmp}/" \
+          src/
       )
     '';
   };
