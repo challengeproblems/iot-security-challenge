@@ -15,3 +15,6 @@ micropython-esp32-stubs = "^1.23.0.post1"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"

@@ -28,6 +28,7 @@ in
 
     nixpkgs-fmt
     black
+    isort
 
     thc-hydra
     nmap
@@ -406,6 +407,21 @@ in
       ${lib.generators.toKeyValue {} (lib.mapAttrs (name: value: value.description) config.scripts)}
       EOF
       echo
+    '';
+  };
+
+  scripts.lint_code = {
+    description = "Lint and fix python source code";
+    exec = ''
+      set -exuo pipefail
+
+      dir="''${1:-src/}"
+      (
+        cd "''${DEVENV_ROOT}"
+
+        isort "''${dir}"
+        black "''${dir}"
+      )
     '';
   };
 
