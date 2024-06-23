@@ -16,6 +16,7 @@ in
     gnused
     coreutils
     util-linuxMinimal
+    which
     rsync
 
     micropython
@@ -216,11 +217,6 @@ in
     description = "Build the OTA firmware from src/";
     exec = ''
       set -exuo pipefail
-
-      if ! firmware_mount_check; then
-        firmware_mount
-        trap firmware_umount EXIT
-      fi
 
       (
         cd "''${DEVENV_ROOT}/src"
@@ -455,6 +451,28 @@ in
 
         isort "''${dir}"
         black "''${dir}"
+      )
+    '';
+  };
+
+  scripts.inspect_command = {
+    description = "Inspects a command, example inspect_command COMMAND";
+    exec = ''
+      set -euo pipefail
+
+      cmd="''${1?Missing command as first parameter}"
+      (
+        cd "''${DEVENV_ROOT}"
+
+        cmd_path="''$(which "''${cmd}" 2>/dev/null || true)"
+        if [ -z "''${cmd_path}" ]; then
+          1>&2 echo "[!] Unknown command ''${cmd}"
+          exit 1
+        fi
+
+        echo "============ Code for ''${cmd} =============="
+        cat "''${cmd_path}"
+        echo "============================================="
       )
     '';
   };
