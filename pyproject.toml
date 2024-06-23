@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.11"
 freezefs = "^2.4"
 scapy = "^2.5.0"
+micropython-esp32-stubs = "^1.23.0.post1"
 
 
 [build-system]

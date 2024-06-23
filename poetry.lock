@@ -11,6 +11,31 @@ files = [
 ]
 
 [[package]]
+name = "micropython-esp32-stubs"
+version = "1.23.0.post1"
+description = "MicroPython stubs"
+optional = false
+python-versions = "<4.0,>=3.8"
+files = [
+    {file = "micropython_esp32_stubs-1.23.0.post1-py3-none-any.whl", hash = "sha256:3d45962d3e6b43f35324fec3e3b29cbf2d2be2c1acc91971c596088df55a5247"},
+    {file = "micropython_esp32_stubs-1.23.0.post1.tar.gz", hash = "sha256:d1cd938029b1eb7f19ea7eb1a996fcec33f6fd98b5fcf73ccd26d7d282d6d537"},
+]
+
+[package.dependencies]
+micropython-stdlib-stubs = ">=1.1.1"
+
+[[package]]
+name = "micropython-stdlib-stubs"
+version = "1.1.2"
+description = "Micropython stdlib is a reduced and augmented copy of typeshed's stdlib for use by MicroPython stub packages"
+optional = false
+python-versions = ">=3.8,<4.0"
+files = [
+    {file = "micropython_stdlib_stubs-1.1.2-py3-none-any.whl", hash = "sha256:a455a01a5d7700ef99124072d94c967d5123778512260d87679e47e57f81e3d8"},
+    {file = "micropython_stdlib_stubs-1.1.2.tar.gz", hash = "sha256:0e20e044f24b7f5d67205fd08780aa4ca0ea3741e4d14406ff7dca1ed8364f49"},
+]
+
+[[package]]
 name = "scapy"
 version = "2.5.0"
 description = "Scapy: interactive packet manipulation tool"
@@ -28,4 +53,4 @@ docs = ["sphinx (>=3.0.0)", "sphinx_rtd_theme (>=0.4.3)", "tox (>=3.0.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "96812a1bd9dde9b59b70b42122213fd14c33000788fd2833eefb1653d3c0a7f8"
+content-hash = "7dd932f41a2eb4ec33162422a17f3285524d6a44751ece42d5cc4e38324e4891"
