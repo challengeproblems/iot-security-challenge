@@ -24,7 +24,6 @@ in
     rshell
     mpfshell
     parallel
-    file
 
     nixpkgs-fmt
     black
@@ -34,9 +33,11 @@ in
     nmap
     iftop
     gzip
-    unzip
     gocryptfs
     tcpdump
+    file
+    netcat
+    unzip
 
     cachix
   ]);
