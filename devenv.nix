@@ -165,7 +165,9 @@ in
     exec = ''
       set -exuo pipefail
 
+      export ALLTTY=true
       parallel \
+        --env ALLTTY \
         --will-cite \
         --tagstring "[{/.}]" \
         --line-buffer \
@@ -211,9 +213,14 @@ in
   };
 
   scripts.firmware_mk = {
-    description = "Build the ota firmware from the content of src/";
+    description = "Build the OTA firmware from src/";
     exec = ''
       set -exuo pipefail
+
+      if ! firmware_mount_check; then
+        firmware_mount
+        trap firmware_umount EXIT
+      fi
 
       (
         cd "''${DEVENV_ROOT}/src"
@@ -252,13 +259,28 @@ in
 
       tty="''${1:-$(util_get_first_usbtty)}"
 
-      firmware_mount
-      trap firmware_umount EXIT
+      if ! firmware_mount_check; then
+        firmware_mount
+        trap firmware_umount EXIT
+      fi
+
 
       flash_erase "''${tty}"
       flash "''${tty}"
-      firmware_mk "''${tty}"
+
       upload "''${tty}"
+    '';
+  };
+
+  scripts.alltty_flash_final_lab = {
+    description = "For all connected tty: Do all steps required to get the final lab on the ESP32";
+    exec = ''
+      set -euo pipefail
+
+      firmware_mount
+      trap firmware_umount EXIT
+
+      alltty flash_final_lab
     '';
   };
 
@@ -372,13 +394,24 @@ in
     '';
   };
 
+  scripts.firmware_mount_check = {
+    description = "Checks if the secret firmware directory is mounted";
+    exec = ''
+      set -exuo pipefail
+      (
+        cd "''${DEVENV_ROOT}"
+        findmnt -M src/ &>/dev/null
+      )
+    '';
+  };
+
   scripts.firmware_mount = {
     description = "Mount the secret firmware directory";
     exec = ''
       set -exuo pipefail
       (
         cd "''${DEVENV_ROOT}"
-        if ! findmnt -M src/ &>/dev/null; then
+        if ! firmware_mount_check; then
           gocryptfs -nonempty src_encrypted/ src/
         fi
       )
@@ -391,7 +424,7 @@ in
       set -exuo pipefail
       (
         cd "''${DEVENV_ROOT}"
-        if findmnt -M src/ &>/dev/null; then
+        if firmware_mount_check; then
           fusermount -u src/
         fi
       )
