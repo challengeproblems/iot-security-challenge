@@ -437,10 +437,10 @@ in
   scripts.firmware_extract_to_src = {
     description = "Extract a fresh copy of the original firmware to src/";
     exec = ''
-      set -exuo pipefail
+      set -euo pipefail
 
       echo "============= WARNING =============="
-      echo "This will reset overwrite all your changes in src/"
+      echo "This will overwrite all your changes in src/"
       echo "Hit ENTER to continue"
       echo "[ENTER]"
       read
