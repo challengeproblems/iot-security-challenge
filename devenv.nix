@@ -427,7 +427,7 @@ in
       dir="''${1:-src/}"
       (
         cd "''${DEVENV_ROOT}"
-        if firmware_mount_check; then
+        if firmware_mount_check "''${dir}"; then
           fusermount -u "''${dir}"
         fi
       )
@@ -453,7 +453,7 @@ in
 
       if ! firmware_mount_check "''${fw_tmp}"; then
         firmware_mount "''${fw_tmp}"
-        trap atexit2 EXIT
+        trap atexit EXIT
       fi
 
       (
