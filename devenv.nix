@@ -527,7 +527,12 @@ in
       devliverable_name="$(basename "''${DEVENV_ROOT}").tar.gz"
       (
         cd "''${DEVENV_ROOT}"
-        echo tar -czf "''${devliverable_name}" "''${DEVENV_ROOT}"
+        tar \
+          -cvzf \
+          --exclude=".*" \
+          --exclude="micodus/" \
+          "''${devliverable_name}" \
+          "."
         echo "[*] Written deliverable to: ''${DEVENV_ROOT}/''${devliverable_name}"
       )
     '';
