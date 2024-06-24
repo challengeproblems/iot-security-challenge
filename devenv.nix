@@ -527,10 +527,9 @@ in
       devenv_basename="$(basename "''${DEVENV_ROOT}")"
       devliverable_name="''${devenv_basename}.tar.gz"
       (
-        set -x
         cd "''${DEVENV_ROOT}"
         tar \
-          -cvzf \
+          -czf \
           "''${devliverable_name}" \
           --exclude='.[^/]*' \
           --exclude='micodus' \
