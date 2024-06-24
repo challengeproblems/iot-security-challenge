@@ -524,14 +524,19 @@ in
     exec = ''
       set -euo pipefail
 
-      devliverable_name="$(basename "''${DEVENV_ROOT}").tar.gz"
+      devenv_basename="$(basename "''${DEVENV_ROOT}")"
+      devliverable_name="''${devenv_basename}.tar.gz"
       (
+        set -x
         cd "''${DEVENV_ROOT}"
         tar \
           -cvzf \
-          --exclude=".*" \
-          --exclude="micodus/" \
           "''${devliverable_name}" \
+          --exclude='.[^/]*' \
+          --exclude='micodus' \
+          --exclude="''${devliverable_name}" \
+          --warning=no-file-changed \
+          --transform "s|^\.|''${devenv_basename}|" \
           "."
         echo "[*] Written deliverable to: ''${DEVENV_ROOT}/''${devliverable_name}"
       )
