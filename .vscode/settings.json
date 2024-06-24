@@ -1,7 +1,9 @@
 {
     "files.exclude": {
+        "**/.*": true,
         "**/.devenv": true,
         "**/.direnv": true,
-        "**/.venv": true
+        "**/.venv": true,
+        "**/.vscode": true
     }
 }
