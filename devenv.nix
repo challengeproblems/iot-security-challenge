@@ -14,6 +14,7 @@ in
   packages = (with pkgs; [
     git
     gnused
+    gnutar
     coreutils
     util-linuxMinimal
     which
@@ -518,6 +519,19 @@ in
     '';
   };
 
+  scripts.create_deliverable = {
+    description = "Create a deliverable for this devenv";
+    exec = ''
+      set -euo pipefail
+
+      devliverable_name="$(basename "''${DEVENV_ROOT}").tar.gz"
+      (
+        cd "''${DEVENV_ROOT}"
+        echo tar -czf "''${devliverable_name}" "''${DEVENV_ROOT}"
+        echo "[*] Written deliverable to: ''${DEVENV_ROOT}/''${devliverable_name}"
+      )
+    '';
+  };
   enterShell = ''
     devenv_help
   '';
