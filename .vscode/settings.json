@@ -1,0 +1,7 @@
+{
+    "files.exclude": {
+        "**/.devenv": true,
+        "**/.direnv": true,
+        "**/.venv": true
+    }
+}
