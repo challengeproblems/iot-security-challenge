@@ -32,6 +32,9 @@ in
     black
     isort
 
+    dig
+    whois
+    openssl
     thc-hydra
     nmap
     iftop
