@@ -186,3 +186,6 @@ fw
 # micodus
 micodus/sources/
 micodus/resources/
+
+# deliverable
+iot-security-challenge.tar.gz

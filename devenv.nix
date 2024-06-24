@@ -532,9 +532,10 @@ in
           -czf \
           "''${devliverable_name}" \
           --exclude='.[^/]*' \
-          --exclude='micodus' \
           --exclude="''${devliverable_name}" \
+          --exclude='micodus' \
           --warning=no-file-changed \
+          --ignore-failed-read \
           --transform "s|^\.|''${devenv_basename}|" \
           "."
         echo "[*] Written deliverable to: ''${DEVENV_ROOT}/''${devliverable_name}"
