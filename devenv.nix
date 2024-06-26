@@ -545,6 +545,12 @@ in
       )
     '';
   };
+
+  # poetry might fallback to query a keyring backend which might or might not exist.
+  # this is bad. We don't want that. We don't need any keys.
+  # https://www.reddit.com/r/learnpython/comments/zcb95y/comment/kdh0aka/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+  env.PYTHON_KEYRING_BACKEND = "keyring.backends.fail.Keyring";
+
   enterShell = ''
     devenv_help
   '';
