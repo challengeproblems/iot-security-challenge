@@ -273,15 +273,23 @@ in
     '';
   };
 
-  scripts.alltty_flash_final_lab = {
-    description = "For all connected tty: Do all steps required to get the final lab on the ESP32";
+  scripts.flash_final_lab_mal = {
+    description = "Do all steps required to get the final lab on the ESP32 mal version";
     exec = ''
-      set -euo pipefail
+      set -exuo pipefail
 
-      firmware_mount
-      trap firmware_umount EXIT
+      tty="''${1:-$(util_get_first_usbtty)}"
 
-      alltty flash_final_lab
+      if ! firmware_mount_check; then
+        firmware_mount "src/" "src_mal/"
+        trap firmware_umount EXIT
+      fi
+
+
+      flash_erase "''${tty}"
+      flash "''${tty}"
+
+      upload "''${tty}"
     '';
   };
 
@@ -414,10 +422,11 @@ in
       set -exuo pipefail
 
       dir="''${1:-src/}"
+      src="''${2:-src_encrypted/}"
       (
         cd "''${DEVENV_ROOT}"
         if ! firmware_mount_check "''${dir}"; then
-          gocryptfs -nonempty src_encrypted/ "''${dir}"
+          gocryptfs -nonempty "''${src}" "''${dir}"
         fi
       )
     '';
