@@ -1,0 +1,1 @@
+exec("open('main.py','w').write('from machine import reset\\nreset()')\\nimport main")

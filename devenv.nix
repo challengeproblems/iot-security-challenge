@@ -232,9 +232,6 @@ in
         }
         trap atexit EXIT
 
-        PYTHONDONTWRITEBYTECODE=1 \
-          python fw_meta.py
-
         rsync \
           --archive \
           --verbose \
@@ -249,6 +246,33 @@ in
           --compress \
           "''${fw_tmp}" \
           "ota_firmware.py"
+
+        PYTHONDONTWRITEBYTECODE=1 \
+          python fw_meta.py
+      )
+    '';
+  };
+
+  scripts.brick = {
+    description = "Brick the current device";
+    exec = ''
+      set -exuo pipefail
+
+      (
+        cd "''${DEVENV_ROOT}"
+        sudo python3 brick.py "192.168.4.1"
+      )
+    '';
+  };
+
+  scripts.brick_remote = {
+    description = "Brick the remote SSID";
+    exec = ''
+      set -exuo pipefail
+
+      (
+        cd "''${DEVENV_ROOT}"
+        sudo python3 brick_remote.py "''${@}"
       )
     '';
   };
